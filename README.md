@@ -1,10 +1,10 @@
-![GitHub Repo stars](https://img.shields.io/github/stars/skanehira/go-lib-template?style=social)
-![GitHub license](https://img.shields.io/github/license/skanehira/go-lib-template)
-![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/skanehira/go-lib-template)
-![GitHub CI Status](https://img.shields.io/github/workflow/status/skanehira/go-lib-template/ci?label=CI)
-![GitHub Release Status](https://img.shields.io/github/workflow/status/skanehira/go-lib-template/Release?label=release)
+![GitHub Repo stars](https://img.shields.io/github/stars/skanehira/go-mask?style=social)
+![GitHub license](https://img.shields.io/github/license/skanehira/go-mask)
+![GitHub go.mod Go version](https://img.shields.io/github/go-mod/go-version/skanehira/go-mask)
+![GitHub CI Status](https://img.shields.io/github/workflow/status/skanehira/go-mask/ci?label=CI)
+![GitHub Release Status](https://img.shields.io/github/workflow/status/skanehira/go-mask/Release?label=release)
 
-# go-lib-template
+# go-mask
 This is template that help you to quick implement some library using Go.
 
 This repository is contains following.
