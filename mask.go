@@ -8,7 +8,7 @@ func Mask(i interface{}) interface{} {
 	kind := reflect.TypeOf(i).Kind()
 	switch kind {
 	case reflect.Struct:
-		return maskStruct(i).Interface()
+		return maskStruct(i).Elem().Interface()
 	}
 	return i
 }
@@ -20,7 +20,7 @@ func maskStruct(s interface{}) reflect.Value {
 	}
 
 	rv := reflect.ValueOf(&s)
-	newRv := reflect.New(rt).Elem()
+	newRv := reflect.New(rt)
 
 	for i := 0; i < rt.NumField(); i++ {
 		field := rt.Field(i)
@@ -38,7 +38,7 @@ func maskStruct(s interface{}) reflect.Value {
 				}
 				newFieldValue = maskPtr(fieldValue)
 			case reflect.Struct:
-				newFieldValue = maskStruct(fieldValue.Interface())
+				newFieldValue = maskStruct(fieldValue.Interface()).Elem()
 			default:
 				// mask literals
 				newFieldValue = maskLiterals(fieldValue).Elem()
@@ -47,7 +47,7 @@ func maskStruct(s interface{}) reflect.Value {
 			newFieldValue = rv.FieldByName(field.Name)
 		}
 
-		newRv.FieldByName(field.Name).Set(newFieldValue)
+		newRv.Elem().FieldByName(field.Name).Set(newFieldValue)
 	}
 	return newRv
 }

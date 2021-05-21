@@ -10,6 +10,10 @@ import (
 )
 
 func TestMaskStruct(t *testing.T) {
+	type Struct struct {
+		String string `mask:"string"`
+	}
+
 	type MaskStruct struct {
 		String     string   `mask:"string"`
 		StringPtr  *string  `mask:"string_ptr"`
@@ -39,6 +43,8 @@ func TestMaskStruct(t *testing.T) {
 		Float32Ptr *float32 `mask:"float_32_ptr"`
 		Float64    float64  `mask:"float_64"`
 		Float64Ptr *float64 `mask:"float_64_ptr"`
+		Struct     Struct   `mask:"struct"`
+		StructPtr  *Struct  `mask:"struct_ptr"`
 	}
 
 	var str string = "hello"
@@ -56,7 +62,10 @@ func TestMaskStruct(t *testing.T) {
 	var f32 float32 = float32(32.0)
 	var f64 float64 = float64(32.0)
 
-	s := MaskStruct{
+	s := Struct{
+		String: "string",
+	}
+	ms := MaskStruct{
 		String:     "string",
 		StringPtr:  &str,
 		Byte:       b,
@@ -85,9 +94,11 @@ func TestMaskStruct(t *testing.T) {
 		Float32Ptr: &f32,
 		Float64:    f64,
 		Float64Ptr: &f64,
+		Struct:     s,
+		StructPtr:  &s,
 	}
 
-	got := Mask(s)
+	got := Mask(ms)
 	var want MaskStruct
 	filename := path.Join("testdata", "mask_struct.json.golden")
 	f, err := os.Open(filename)
