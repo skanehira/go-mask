@@ -107,7 +107,3 @@ func maskLiterals(fieldValue reflect.Value) reflect.Value {
 	}
 	return fieldValue
 }
-
-func maskMap(m interface{}) interface{} {
-	return m
-}
