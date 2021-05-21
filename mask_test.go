@@ -9,6 +9,24 @@ import (
 	"github.com/google/go-cmp/cmp"
 )
 
+var (
+	str  string  = "string"
+	i    int     = 32
+	i8   int8    = int8(i)
+	i16  int16   = int16(i)
+	i32  int32   = int32(i)
+	i64  int64   = int64(i)
+	b    byte    = byte(32)
+	r    rune    = 32
+	ui   uint    = 32
+	ui8  uint8   = uint8(ui)
+	ui16 uint16  = uint16(i)
+	ui32 uint32  = uint32(i)
+	ui64 uint64  = uint64(i)
+	f32  float32 = float32(32.32)
+	f64  float64 = float64(32.32)
+)
+
 func TestMaskStruct(t *testing.T) {
 	type Struct struct {
 		String string `mask:"string"`
@@ -49,27 +67,11 @@ func TestMaskStruct(t *testing.T) {
 		StructPtr  *Struct  `mask:"struct_ptr"`
 	}
 
-	var str string = "hello"
-	var i int = 32
-	var i8 int8 = int8(i)
-	var i16 int16 = int16(i)
-	var i32 int32 = int32(i)
-	var i64 int64 = int64(i)
-	var b byte = byte(32)
-	var r rune = 32
-	var ui uint = 32
-	var ui8 uint8 = uint8(ui)
-	var ui16 uint16 = uint16(i)
-	var ui32 uint32 = uint32(i)
-	var ui64 uint64 = uint64(i)
-	var f32 float32 = float32(32.0)
-	var f64 float64 = float64(32.0)
-
 	s := Struct{
-		String: "string",
+		String: str,
 	}
 	ms := MaskStruct{
-		String:     "string",
+		String:     str,
 		StringPtr:  &str,
 		Byte:       b,
 		BytePtr:    &b,
@@ -77,7 +79,7 @@ func TestMaskStruct(t *testing.T) {
 		RunPtr:     &r,
 		Uint:       ui,
 		UintPtr:    &ui,
-		Uint8:      uint8(ui),
+		Uint8:      ui8,
 		Uint8Ptr:   &ui8,
 		Uint16:     ui16,
 		Uint16Ptr:  &ui16,
@@ -106,6 +108,101 @@ func TestMaskStruct(t *testing.T) {
 	got := Mask(ms)
 	var want MaskStruct
 	filename := path.Join("testdata", "mask_struct.json.golden")
+	f, err := os.Open(filename)
+	if err != nil {
+		t.Fatalf("cannot open file %s: %s", filename, err)
+	}
+	defer f.Close()
+
+	if err := json.NewDecoder(f).Decode(&want); err != nil {
+		t.Fatalf("cannot decode %s to %T: %s", f.Name(), want, err)
+	}
+	if diff := cmp.Diff(want, got); diff != "" {
+		t.Errorf("mask struct mismatch (-want +got):\n%s", diff)
+	}
+}
+
+func TestUnMaskStruct(t *testing.T) {
+	type Struct struct {
+		String string
+	}
+
+	type UnMaskStruct struct {
+		String     string
+		StringPtr  *string
+		Byte       byte
+		BytePtr    *byte
+		Rune       rune
+		RunPtr     *rune
+		Uint       uint
+		UintPtr    *uint
+		Uint8      uint8
+		Uint8Ptr   *uint8
+		Uint16     uint16
+		Uint16Ptr  *uint16
+		Uint32     uint32
+		Uint32Ptr  *uint32
+		Uint64     uint64
+		Uint64Ptr  *uint64
+		Int        int
+		IntPtr     *int
+		Int8       int8
+		Int8Ptr    *int8
+		Int16      int16
+		Int16Ptr   *int16
+		Int32      int32
+		Int32Ptr   *int32
+		Int64      int64
+		Int64Ptr   *int64
+		Float32    float32
+		Float32Ptr *float32
+		Float64    float64
+		Float64Ptr *float64
+		Struct     Struct
+		StructPtr  *Struct
+	}
+
+	s := Struct{
+		String: str,
+	}
+	ms := UnMaskStruct{
+		String:     str,
+		StringPtr:  &str,
+		Byte:       b,
+		BytePtr:    &b,
+		Rune:       r,
+		RunPtr:     &r,
+		Uint:       ui,
+		UintPtr:    &ui,
+		Uint8:      ui8,
+		Uint8Ptr:   &ui8,
+		Uint16:     ui16,
+		Uint16Ptr:  &ui16,
+		Uint32:     ui32,
+		Uint32Ptr:  &ui32,
+		Uint64:     ui64,
+		Uint64Ptr:  &ui64,
+		Int:        i,
+		IntPtr:     &i,
+		Int8:       i8,
+		Int8Ptr:    &i8,
+		Int16:      i16,
+		Int16Ptr:   &i16,
+		Int32:      i32,
+		Int32Ptr:   &i32,
+		Int64:      i64,
+		Int64Ptr:   &i64,
+		Float32:    f32,
+		Float32Ptr: &f32,
+		Float64:    f64,
+		Float64Ptr: &f64,
+		Struct:     s,
+		StructPtr:  &s,
+	}
+
+	got := Mask(ms)
+	var want UnMaskStruct
+	filename := path.Join("testdata", "unmask_struct.json.golden")
 	f, err := os.Open(filename)
 	if err != nil {
 		t.Fatalf("cannot open file %s: %s", filename, err)

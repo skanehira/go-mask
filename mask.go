@@ -44,7 +44,7 @@ func maskStruct(s interface{}) reflect.Value {
 				newFieldValue = maskLiterals(fieldValue).Elem()
 			}
 		} else {
-			newFieldValue = rv.FieldByName(field.Name)
+			newFieldValue = fieldValue
 		}
 
 		newRv.Elem().FieldByName(field.Name).Set(newFieldValue)
