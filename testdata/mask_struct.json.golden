@@ -19,6 +19,8 @@
   "IntPtr": -1,
   "Int8": -1,
   "Int8Ptr": -1,
+  "Int16": -1,
+  "Int16Ptr": -1,
   "Int32": -1,
   "Int32Ptr": -1,
   "Int64": -1,

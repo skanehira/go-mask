@@ -35,6 +35,8 @@ func TestMaskStruct(t *testing.T) {
 		IntPtr     *int     `mask:"int_ptr"`
 		Int8       int8     `mask:"int_8"`
 		Int8Ptr    *int8    `mask:"int_8_ptr"`
+		Int16      int16    `mask:"int_16"`
+		Int16Ptr   *int16   `mask:"int_16_ptr"`
 		Int32      int32    `mask:"int_32"`
 		Int32Ptr   *int32   `mask:"int_32_ptr"`
 		Int64      int64    `mask:"int_64"`
@@ -50,6 +52,7 @@ func TestMaskStruct(t *testing.T) {
 	var str string = "hello"
 	var i int = 32
 	var i8 int8 = int8(i)
+	var i16 int16 = int16(i)
 	var i32 int32 = int32(i)
 	var i64 int64 = int64(i)
 	var b byte = byte(32)
@@ -86,6 +89,8 @@ func TestMaskStruct(t *testing.T) {
 		IntPtr:     &i,
 		Int8:       i8,
 		Int8Ptr:    &i8,
+		Int16:      i16,
+		Int16Ptr:   &i16,
 		Int32:      i32,
 		Int32Ptr:   &i32,
 		Int64:      i64,
