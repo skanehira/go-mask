@@ -5,32 +5,40 @@ import (
 )
 
 func Mask(i interface{}) interface{} {
-	kind := reflect.TypeOf(i).Kind()
-	switch kind {
+	switch reflect.TypeOf(i).Kind() {
 	case reflect.Struct:
 		return maskStruct(i).Elem().Interface()
+	case reflect.Ptr:
+		if reflect.ValueOf(i).Elem().Kind() == reflect.Struct {
+			return maskStruct(i).Elem().Interface()
+		}
 	}
 	return i
 }
 
 func maskStruct(s interface{}) reflect.Value {
 	rt := reflect.TypeOf(s)
-	if rt.Kind() == reflect.Ptr {
-		panic("arg is pointer")
-	}
+	var (
+		rv    reflect.Value
+		newRv reflect.Value
+	)
 
-	rv := reflect.ValueOf(&s)
-	newRv := reflect.New(rt)
+	if rt.Kind() == reflect.Ptr {
+		rv = reflect.ValueOf(s).Elem()
+		newRv = reflect.New(rt.Elem())
+		rt = rt.Elem()
+	} else {
+		rv = reflect.ValueOf(&s).Elem().Elem()
+		newRv = reflect.New(rt)
+	}
 
 	for i := 0; i < rt.NumField(); i++ {
 		field := rt.Field(i)
-		fieldValue := rv.Elem().Elem().FieldByName(field.Name)
-		//fmt.Printf("fieldname: %s, value: %#+v\n", field.Name, fieldValue)
+		fieldValue := rv.FieldByName(field.Name)
 		var newFieldValue reflect.Value
 
 		// if field has `mask` tag, masking field value
 		if _, ok := field.Tag.Lookup("mask"); ok {
-			// TODO: when kind is ptr
 			switch fieldValue.Kind() {
 			case reflect.Ptr:
 				if fieldValue.IsNil() {
@@ -40,7 +48,6 @@ func maskStruct(s interface{}) reflect.Value {
 			case reflect.Struct:
 				newFieldValue = maskStruct(fieldValue.Interface()).Elem()
 			default:
-				// mask literals
 				newFieldValue = maskLiterals(fieldValue).Elem()
 			}
 		} else {
