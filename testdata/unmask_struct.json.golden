@@ -1,0 +1,38 @@
+{
+  "String": "string",
+  "StringPtr": "string",
+  "Byte": 32,
+  "BytePtr": 32,
+  "Rune": 32,
+  "RunPtr": 32,
+  "Uint": 32,
+  "UintPtr": 32,
+  "Uint8": 32,
+  "Uint8Ptr": 32,
+  "Uint16": 32,
+  "Uint16Ptr": 32,
+  "Uint32": 32,
+  "Uint32Ptr": 32,
+  "Uint64": 32,
+  "Uint64Ptr": 32,
+  "Int": 32,
+  "IntPtr": 32,
+  "Int8": 32,
+  "Int8Ptr": 32,
+  "Int16": 32,
+  "Int16Ptr": 32,
+  "Int32": 32,
+  "Int32Ptr": 32,
+  "Int64": 32,
+  "Int64Ptr": 32,
+  "Float32": 32.32,
+  "Float32Ptr": 32.32,
+  "Float64": 32.32,
+  "Float64Ptr": 32.32,
+  "Struct": {
+    "String": "string"
+  },
+  "StructPtr": {
+    "String": "string"
+  }
+}
