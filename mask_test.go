@@ -33,38 +33,40 @@ func TestMaskStruct(t *testing.T) {
 	}
 
 	type MaskStruct struct {
-		String     string   `mask:"string"`
-		StringPtr  *string  `mask:"string_ptr"`
-		Byte       byte     `mask:"byte"`
-		BytePtr    *byte    `mask:"byte_ptr"`
-		Rune       rune     `mask:"rune"`
-		RunPtr     *rune    `mask:"run_ptr"`
-		Uint       uint     `mask:"uint"`
-		UintPtr    *uint    `mask:"uint_ptr"`
-		Uint8      uint8    `mask:"uint_8"`
-		Uint8Ptr   *uint8   `mask:"uint_8_ptr"`
-		Uint16     uint16   `mask:"uint_16"`
-		Uint16Ptr  *uint16  `mask:"uint_16_ptr"`
-		Uint32     uint32   `mask:"uint_32"`
-		Uint32Ptr  *uint32  `mask:"uint_32_ptr"`
-		Uint64     uint64   `mask:"uint_64"`
-		Uint64Ptr  *uint64  `mask:"uint_64_ptr"`
-		Int        int      `mask:"int"`
-		IntPtr     *int     `mask:"int_ptr"`
-		Int8       int8     `mask:"int_8"`
-		Int8Ptr    *int8    `mask:"int_8_ptr"`
-		Int16      int16    `mask:"int_16"`
-		Int16Ptr   *int16   `mask:"int_16_ptr"`
-		Int32      int32    `mask:"int_32"`
-		Int32Ptr   *int32   `mask:"int_32_ptr"`
-		Int64      int64    `mask:"int_64"`
-		Int64Ptr   *int64   `mask:"int_64_ptr"`
-		Float32    float32  `mask:"float_32"`
-		Float32Ptr *float32 `mask:"float_32_ptr"`
-		Float64    float64  `mask:"float_64"`
-		Float64Ptr *float64 `mask:"float_64_ptr"`
-		Struct     Struct   `mask:"struct"`
-		StructPtr  *Struct  `mask:"struct_ptr"`
+		String      string   `mask:"string"`
+		StringPtr   *string  `mask:"string_ptr"`
+		Byte        byte     `mask:"byte"`
+		BytePtr     *byte    `mask:"byte_ptr"`
+		Rune        rune     `mask:"rune"`
+		RunPtr      *rune    `mask:"run_ptr"`
+		Uint        uint     `mask:"uint"`
+		UintPtr     *uint    `mask:"uint_ptr"`
+		Uint8       uint8    `mask:"uint_8"`
+		Uint8Ptr    *uint8   `mask:"uint_8_ptr"`
+		Uint16      uint16   `mask:"uint_16"`
+		Uint16Ptr   *uint16  `mask:"uint_16_ptr"`
+		Uint32      uint32   `mask:"uint_32"`
+		Uint32Ptr   *uint32  `mask:"uint_32_ptr"`
+		Uint64      uint64   `mask:"uint_64"`
+		Uint64Ptr   *uint64  `mask:"uint_64_ptr"`
+		Int         int      `mask:"int"`
+		IntPtr      *int     `mask:"int_ptr"`
+		Int8        int8     `mask:"int_8"`
+		Int8Ptr     *int8    `mask:"int_8_ptr"`
+		Int16       int16    `mask:"int_16"`
+		Int16Ptr    *int16   `mask:"int_16_ptr"`
+		Int32       int32    `mask:"int_32"`
+		Int32Ptr    *int32   `mask:"int_32_ptr"`
+		Int64       int64    `mask:"int_64"`
+		Int64Ptr    *int64   `mask:"int_64_ptr"`
+		Float32     float32  `mask:"float_32"`
+		Float32Ptr  *float32 `mask:"float_32_ptr"`
+		Float64     float64  `mask:"float_64"`
+		Float64Ptr  *float64 `mask:"float_64_ptr"`
+		StructNoTag Struct
+		Struct      Struct  `mask:"struct"`
+		StructPtr   *Struct `mask:"struct_ptr"`
+		NilPtr      *int    `mask:"nil_ptr"`
 	}
 
 	s := Struct{
@@ -103,6 +105,7 @@ func TestMaskStruct(t *testing.T) {
 		Float64Ptr: &f64,
 		Struct:     s,
 		StructPtr:  &s,
+		NilPtr:     nil,
 	}
 
 	got := Mask(ms)
